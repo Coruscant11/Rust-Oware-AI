@@ -24,6 +24,6 @@ g++ -std=c++20 -Ofast *.cpp
 ```
 <img width="638" alt="Capture d’écran 2022-01-07 à 14 58 06" src="https://user-images.githubusercontent.com/1645347/148554319-9c91cc49-b8ef-44d3-be8f-4b631b7f4e5a.png">
 
-#### Conclusion
+## Conclusion
 I did my best to write exactly the same algorithm between the two versions. Both of them are available on my github, do not hesitate to tell me if i made a mistake somewhere, making the implementation not fair.
 I'm a litte bit surprised to see the Rust version win over C++. That's great !
