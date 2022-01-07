@@ -76,7 +76,7 @@ pub fn decision_minmax(board: &Board, player: usize) -> (Color, usize) {
                         new_board.play_move(player, hole, Color::from_integer(color));
                         let mut local_cpt = 0;
                         let mut local_cpt_cut = 0;
-                        let eval = minmax_alphabeta(
+                        let eval = minimax_alphabeta(
                             &new_board,
                             player,
                             (player + 1) % 2,
@@ -116,7 +116,7 @@ pub fn decision_minmax(board: &Board, player: usize) -> (Color, usize) {
 
     println!("Depth : {}, for {} move(s) available.", max_depth, moves_amount);
     println!(
-        "{} minmax calls, with {} alphabeta cuts.\nElapsed time : {}s",
+        "{} minimax calls, with {} alphabeta cuts.\nElapsed time : {}s",
         cpt.lock().unwrap(),
         cpt_cut.lock().unwrap(),
         now.elapsed().as_secs_f32()
@@ -125,7 +125,7 @@ pub fn decision_minmax(board: &Board, player: usize) -> (Color, usize) {
     return (Color::from_integer(indices.0), indices.1);
 }
 
-fn minmax_alphabeta(board: &Board, max_player: usize, player: usize, is_max: bool, depth: i32, max_depth: i32, alpha: i32, beta: i32, cpt: &mut i32, cpt_cut: &mut i32) -> i32 {
+fn minimax_alphabeta(board: &Board, max_player: usize, player: usize, is_max: bool, depth: i32, max_depth: i32, alpha: i32, beta: i32, cpt: &mut i32, cpt_cut: &mut i32) -> i32 {
    *cpt += 1;
     let mut alpha = alpha;
     let mut beta = beta;
@@ -169,7 +169,7 @@ fn minmax_alphabeta(board: &Board, max_player: usize, player: usize, is_max: boo
         value = -10_000_000;
         for i in 0..32 {
             if moves[i].eval > i32::MIN {
-                let eval = minmax_alphabeta(&moves[i].board, max_player, (player + 1) % 2, false,
+                let eval = minimax_alphabeta(&moves[i].board, max_player, (player + 1) % 2, false,
                     depth + 1, max_depth, alpha, beta, cpt, cpt_cut);
                 value = max(value, eval);
                 if value >= beta {
@@ -183,7 +183,7 @@ fn minmax_alphabeta(board: &Board, max_player: usize, player: usize, is_max: boo
         value = 10_000_000;
         for i in 0..32 {
             if moves[i].eval > i32::MIN {
-                let eval = minmax_alphabeta(&moves[i].board, max_player, (player + 1) % 2, true,
+                let eval = minimax_alphabeta(&moves[i].board, max_player, (player + 1) % 2, true,
                     depth + 1, max_depth, alpha, beta, cpt, cpt_cut);
                 value = min(value, eval);
                 if alpha >= value {
